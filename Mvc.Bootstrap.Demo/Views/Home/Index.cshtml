@@ -1,0 +1,61 @@
+﻿@using Mvc.Bootstrap.Demo.Models
+@using Mvc.Bootstrap.Extentions
+@{
+    ViewBag.Title = "主页";
+}
+
+<div class="jumbotron">
+    <h2>@ViewBag.Message</h2>
+    <p>
+        This is a template to demonstrate the way to beautify the default
+        MVC3 template using Twitter Bootstrap website. It is pretty
+        simple and easy.
+    </p>
+    <p>
+        <a href="http://asp.net/mvc" class="btn btn-primary"
+            style="color: White;">To learn more about ASP.NET MVC visit &raquo;</a>
+    </p>
+</div>
+
+@*<div>
+    @Html.PageLinks(1, 10, x => Url.Action("Index", new { pageIndex = x }))
+</div>*@
+
+
+@*@Html.BootStrap().Alert().Type(AlertType.Danger).GlyphIcon("glyphicon-exclamation-sign").Message("Enter a valid email address").Build()*@
+
+@*@Html.BootStrap().Button().Size(ButtonSize.Large).Id("xx").Text("hahahh").Type(ButtonType.Default).MergeAttribute("xxx", "1").Build()*@
+
+
+@{
+    List<PeopleModel> peopleModels = new List<PeopleModel>
+    {
+        new PeopleModel()
+        {
+            Age = 10,
+            Id = "11111",
+            Name = "Jack"
+        },
+        new PeopleModel()
+        {
+            Age = 20,
+            Id = "222",
+            Name = "Tom"
+        }
+    };
+}
+
+@Html.BootStrap().Table(peopleModels).Columns(col =>
+{
+    col.Bound("Id").Width("20%").Template(p =>
+    {
+        TagBuilder tb = new TagBuilder("div");
+        tb.MergeAttribute("style", "color:red;");
+        tb.InnerHtml = p.Id;
+        return tb.ToString();
+    });
+    col.Bound("名称", "Name");
+    col.Bound("年龄", "Age");
+}).Hover().Build()
+
+@Html.BootStrap().Paging().Index(1).PageCount(10).PageUrl(x => Url.Action("Index", new { pageIndex = x })).Build()
